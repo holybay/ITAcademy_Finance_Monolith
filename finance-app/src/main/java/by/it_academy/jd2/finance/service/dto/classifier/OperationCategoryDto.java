@@ -1,4 +1,4 @@
-package by.it_academy.jd2.finance.service.dto;
+package by.it_academy.jd2.finance.service.dto.classifier;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
-public class CurrencyDto {
+public class OperationCategoryDto {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private UUID id;
@@ -17,19 +17,16 @@ public class CurrencyDto {
     private LocalDateTime updatedAt;
     @NotBlank(message = "Title field can't be blank!")
     private String title;
-    @NotBlank(message = "Description field can't be blank!")
-    private String description;
 
-    private CurrencyDto(UUID id, LocalDateTime createdAt, LocalDateTime updatedAt, String title, String description) {
+    private OperationCategoryDto(UUID id, LocalDateTime createdAt, LocalDateTime updatedAt, String title) {
         this.id = id;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.title = title;
-        this.description = description;
     }
 
-    public static CurrencyDtoBuilder builder() {
-        return new CurrencyDtoBuilder();
+    public static OperationCategoryDtoBuilder builder() {
+        return new OperationCategoryDtoBuilder();
     }
 
     public UUID getId() {
@@ -64,78 +61,62 @@ public class CurrencyDto {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CurrencyDto that = (CurrencyDto) o;
+        OperationCategoryDto that = (OperationCategoryDto) o;
         return Objects.equals(id, that.id) && Objects.equals(createdAt, that.createdAt)
-                && Objects.equals(updatedAt, that.updatedAt) && Objects.equals(title, that.title)
-                && Objects.equals(description, that.description);
+                && Objects.equals(updatedAt, that.updatedAt) && Objects.equals(title, that.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, createdAt, updatedAt, title, description);
+        return Objects.hash(id, createdAt, updatedAt, title);
     }
 
     @Override
     public String toString() {
-        return "CurrencyDto{" +
+        return "OperationCategoryDto{" +
                 "id=" + id +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
                 '}';
     }
 
-    public static class CurrencyDtoBuilder {
+    public static class OperationCategoryDtoBuilder {
 
         private UUID id;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
         private String title;
-        private String description;
 
-        private CurrencyDtoBuilder() {
+        private OperationCategoryDtoBuilder() {
         }
 
-        public CurrencyDtoBuilder setId(UUID id) {
+        public OperationCategoryDto build() {
+            return new OperationCategoryDto(id, createdAt, updatedAt, title);
+        }
+
+        public OperationCategoryDtoBuilder setId(UUID id) {
             this.id = id;
             return this;
         }
 
-        public CurrencyDtoBuilder setCreatedAt(LocalDateTime createdAt) {
+        public OperationCategoryDtoBuilder setCreatedAt(LocalDateTime createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        public CurrencyDtoBuilder setUpdatedAt(LocalDateTime updatedAt) {
+        public OperationCategoryDtoBuilder setUpdatedAt(LocalDateTime updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }
 
-        public CurrencyDtoBuilder setTitle(String title) {
+        public OperationCategoryDtoBuilder setTitle(String title) {
             this.title = title;
             return this;
-        }
-
-        public CurrencyDtoBuilder setDescription(String description) {
-            this.description = description;
-            return this;
-        }
-
-        public CurrencyDto build() {
-            return new CurrencyDto(id, createdAt, updatedAt, title, description);
         }
     }
 }

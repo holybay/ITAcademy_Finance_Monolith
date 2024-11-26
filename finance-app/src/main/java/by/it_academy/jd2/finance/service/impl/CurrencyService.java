@@ -5,7 +5,7 @@ import by.it_academy.jd2.finance.platform.util.PageUtil;
 import by.it_academy.jd2.finance.repository.ICurrencyRepository;
 import by.it_academy.jd2.finance.repository.entity.Currency;
 import by.it_academy.jd2.finance.service.ICurrencyService;
-import by.it_academy.jd2.finance.service.dto.CurrencyDto;
+import by.it_academy.jd2.finance.service.dto.classifier.CurrencyDto;
 import by.it_academy.jd2.finance.service.dto.page.PageDto;
 import by.it_academy.jd2.finance.service.dto.page.PageOf;
 import by.it_academy.jd2.finance.service.mapper.ClassifierMapper;

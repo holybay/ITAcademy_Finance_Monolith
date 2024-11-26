@@ -2,8 +2,8 @@ package by.it_academy.jd2.finance.controller;
 
 import by.it_academy.jd2.finance.service.ICurrencyService;
 import by.it_academy.jd2.finance.service.IOperationCategoryService;
-import by.it_academy.jd2.finance.service.dto.CurrencyDto;
-import by.it_academy.jd2.finance.service.dto.OperationCategoryDto;
+import by.it_academy.jd2.finance.service.dto.classifier.CurrencyDto;
+import by.it_academy.jd2.finance.service.dto.classifier.OperationCategoryDto;
 import by.it_academy.jd2.finance.service.dto.page.PageDto;
 import by.it_academy.jd2.finance.service.dto.page.PageOf;
 import jakarta.validation.Valid;

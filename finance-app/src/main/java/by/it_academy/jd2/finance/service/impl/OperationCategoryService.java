@@ -5,7 +5,7 @@ import by.it_academy.jd2.finance.platform.util.PageUtil;
 import by.it_academy.jd2.finance.repository.IOperationCategoryRepository;
 import by.it_academy.jd2.finance.repository.entity.OperationCategory;
 import by.it_academy.jd2.finance.service.IOperationCategoryService;
-import by.it_academy.jd2.finance.service.dto.OperationCategoryDto;
+import by.it_academy.jd2.finance.service.dto.classifier.OperationCategoryDto;
 import by.it_academy.jd2.finance.service.dto.page.PageDto;
 import by.it_academy.jd2.finance.service.dto.page.PageOf;
 import by.it_academy.jd2.finance.service.mapper.ClassifierMapper;

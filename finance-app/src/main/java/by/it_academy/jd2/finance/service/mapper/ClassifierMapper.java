@@ -2,8 +2,8 @@ package by.it_academy.jd2.finance.service.mapper;
 
 import by.it_academy.jd2.finance.repository.entity.Currency;
 import by.it_academy.jd2.finance.repository.entity.OperationCategory;
-import by.it_academy.jd2.finance.service.dto.CurrencyDto;
-import by.it_academy.jd2.finance.service.dto.OperationCategoryDto;
+import by.it_academy.jd2.finance.service.dto.classifier.CurrencyDto;
+import by.it_academy.jd2.finance.service.dto.classifier.OperationCategoryDto;
 import org.springframework.stereotype.Component;
 
 @Component
