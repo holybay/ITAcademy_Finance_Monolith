@@ -15,6 +15,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.NoSuchElementException;
+import java.util.UUID;
+
 @Service
 public class CurrencyService implements ICurrencyService {
 
@@ -31,6 +34,12 @@ public class CurrencyService implements ICurrencyService {
     @Override
     public void create(CurrencyDto dto) {
         currencyRepository.saveAndFlush(mapper.toEntity(dto));
+    }
+
+    @Override
+    public Currency getById(UUID id) {
+        return currencyRepository.findById(id).orElseThrow(() ->
+                new NoSuchElementException("There is no currency with id:" + id));
     }
 
     @Override
