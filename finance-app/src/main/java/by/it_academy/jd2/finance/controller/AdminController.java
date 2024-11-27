@@ -27,8 +27,8 @@ import java.util.UUID;
 @RequestMapping("/users")
 public class AdminController {
 
-    public static final String PATH_VAR_ID_NAME = "uuid";
-    public static final String PATH_VAR_DT_UPDATE = "dt_update";
+    private static final String PATH_VAR_ID_NAME = "uuid";
+    private static final String PATH_VAR_DT_UPDATE = "dt_update";
     private final IUserServiceWrapper userServiceWrapper;
 
     public AdminController(IUserServiceWrapper userServiceWrapper) {

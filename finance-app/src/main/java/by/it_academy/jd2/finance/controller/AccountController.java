@@ -27,9 +27,9 @@ import java.util.UUID;
 @RequestMapping("/account")
 public class AccountController {
 
-    public static final String PATH_VAR_ID_NAME = "uuid";
-    public static final String PATH_VAR_DT_UPDATE = "dt_update";
-    public static final String AUTH_HEADER = "Authorization";
+    private static final String PATH_VAR_ID_NAME = "uuid";
+    private static final String PATH_VAR_DT_UPDATE = "dt_update";
+    private static final String AUTH_HEADER = "Authorization";
     private final IAccountService accountService;
 
     public AccountController(IAccountService accountService) {
