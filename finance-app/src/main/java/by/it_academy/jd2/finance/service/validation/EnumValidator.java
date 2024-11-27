@@ -1,5 +1,6 @@
 package by.it_academy.jd2.finance.service.validation;
 
+import by.it_academy.jd2.finance.service.validation.impl.CustomEnumValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 import jakarta.validation.constraints.NotNull;
