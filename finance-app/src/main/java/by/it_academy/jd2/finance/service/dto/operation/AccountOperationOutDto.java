@@ -35,6 +35,22 @@ public class AccountOperationOutDto {
     @JsonProperty("currency")
     private UUID currencyId;
 
+    private AccountOperationOutDto(UUID id, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime date,
+                                   String description, UUID categoryId, BigDecimal value, UUID currencyId) {
+        this.id = id;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.date = date;
+        this.description = description;
+        this.categoryId = categoryId;
+        this.value = value;
+        this.currencyId = currencyId;
+    }
+
+    public static AccountOperationOutDtoBuilder builder() {
+        return new AccountOperationOutDtoBuilder();
+    }
+
     public UUID getId() {
         return id;
     }
@@ -104,7 +120,10 @@ public class AccountOperationOutDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AccountOperationOutDto that = (AccountOperationOutDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt) && Objects.equals(date, that.date) && Objects.equals(description, that.description) && Objects.equals(categoryId, that.categoryId) && Objects.equals(value, that.value) && Objects.equals(currencyId, that.currencyId);
+        return Objects.equals(id, that.id) && Objects.equals(createdAt, that.createdAt)
+                && Objects.equals(updatedAt, that.updatedAt) && Objects.equals(date, that.date)
+                && Objects.equals(description, that.description) && Objects.equals(categoryId, that.categoryId)
+                && Objects.equals(value, that.value) && Objects.equals(currencyId, that.currencyId);
     }
 
     @Override
@@ -124,5 +143,64 @@ public class AccountOperationOutDto {
                 ", value=" + value +
                 ", currencyId=" + currencyId +
                 '}';
+    }
+
+    public static class AccountOperationOutDtoBuilder {
+
+        private UUID id;
+        private LocalDateTime createdAt;
+        private LocalDateTime updatedAt;
+        private LocalDateTime date;
+        private String description;
+        private UUID categoryId;
+        private BigDecimal value;
+        private UUID currencyId;
+
+        private AccountOperationOutDtoBuilder() {
+        }
+
+        public AccountOperationOutDto build() {
+            return new AccountOperationOutDto(id, createdAt, updatedAt, date, description, categoryId, value, currencyId);
+        }
+
+        public AccountOperationOutDtoBuilder setId(UUID id) {
+            this.id = id;
+            return this;
+        }
+
+        public AccountOperationOutDtoBuilder setCreatedAt(LocalDateTime createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        public AccountOperationOutDtoBuilder setUpdatedAt(LocalDateTime updatedAt) {
+            this.updatedAt = updatedAt;
+            return this;
+        }
+
+        public AccountOperationOutDtoBuilder setDate(LocalDateTime date) {
+            this.date = date;
+            return this;
+        }
+
+        public AccountOperationOutDtoBuilder setDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public AccountOperationOutDtoBuilder setCategoryId(UUID categoryId) {
+            this.categoryId = categoryId;
+            return this;
+        }
+
+        public AccountOperationOutDtoBuilder setValue(BigDecimal value) {
+            this.value = value;
+            return this;
+        }
+
+        public AccountOperationOutDtoBuilder setCurrencyId(UUID currencyId) {
+            this.currencyId = currencyId;
+            return this;
+        }
     }
 }
