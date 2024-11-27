@@ -6,10 +6,10 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 @SpringBootApplication
 @ConfigurationPropertiesScan("by.it_academy.jd2.finance.config.property")
-public class FinanceApplication {
+public class FinanceAppApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(FinanceApplication.class, args);
+        SpringApplication.run(FinanceAppApplication.class, args);
     }
 
 }
