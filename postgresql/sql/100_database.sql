@@ -1,4 +1,4 @@
-CREATE DATABASE user_service
+CREATE DATABASE finance_monolith
     WITH
     OWNER = postgres
     ENCODING = 'UTF8'
