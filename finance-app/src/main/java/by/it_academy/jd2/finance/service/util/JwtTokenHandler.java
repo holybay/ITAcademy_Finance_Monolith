@@ -25,6 +25,10 @@ public class JwtTokenHandler {
         this.property = property;
     }
 
+    public static String getTokenFromHeader(String header) {
+        return header.split(" ")[1].trim();
+    }
+
     public String generateToken(User user) {
         return Jwts.builder()
                    .setSubject(user.getId().toString())
