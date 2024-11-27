@@ -1,11 +1,13 @@
 package by.it_academy.jd2.finance.platform.util;
 
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
+@Component
 public class LocalDateTimeConverterFromLong implements Converter<String, LocalDateTime> {
 
     @Override
