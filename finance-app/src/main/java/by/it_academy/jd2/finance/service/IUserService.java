@@ -6,11 +6,14 @@ import by.it_academy.jd2.finance.service.dto.page.PageDto;
 import by.it_academy.jd2.finance.service.dto.user.UserCreateDto;
 import by.it_academy.jd2.finance.service.dto.user.UserSelfCreateDto;
 import by.it_academy.jd2.finance.service.dto.user.UserUpdateDto;
+import by.it_academy.jd2.finance.service.validation.IUserValidator;
 import org.springframework.data.domain.Page;
 
 import java.util.UUID;
 
 public interface IUserService {
+
+    IUserValidator getUserValidator();
 
     void create(UserCreateDto createDto);
 

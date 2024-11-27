@@ -16,6 +16,7 @@ import by.it_academy.jd2.finance.service.dto.user.UserCreateDto;
 import by.it_academy.jd2.finance.service.dto.user.UserSelfCreateDto;
 import by.it_academy.jd2.finance.service.dto.user.UserUpdateDto;
 import by.it_academy.jd2.finance.service.mapper.UserMapper;
+import by.it_academy.jd2.finance.service.validation.IUserValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -30,15 +31,23 @@ import java.util.UUID;
 public class UserService implements IUserService {
 
     private final IUserRepository userRepository;
+    private final IUserValidator userValidator;
     private final UserMapper userMapper;
     private final PasswordEncoder encoder;
     private final PageProperty pageProperty;
 
-    public UserService(IUserRepository userRepository, UserMapper userMapper, PasswordEncoder encoder, PageProperty pageProperty) {
+    public UserService(IUserRepository userRepository, IUserValidator userValidator, UserMapper userMapper,
+                       PasswordEncoder encoder, PageProperty pageProperty) {
         this.userRepository = userRepository;
+        this.userValidator = userValidator;
         this.userMapper = userMapper;
         this.encoder = encoder;
         this.pageProperty = pageProperty;
+    }
+
+    @Override
+    public IUserValidator getUserValidator() {
+        return userValidator;
     }
 
     @Override
