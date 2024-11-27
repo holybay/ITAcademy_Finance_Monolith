@@ -39,6 +39,10 @@ public class UserUpdateDto {
         this.password = password;
     }
 
+    public static UserUpdateDtoBuilder builder() {
+        return new UserUpdateDtoBuilder();
+    }
+
     public String getMail() {
         return mail;
     }
@@ -101,5 +105,46 @@ public class UserUpdateDto {
                 ", status='" + status + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+    public static class UserUpdateDtoBuilder {
+
+        private String mail;
+        private String fio;
+        private String role;
+        private String status;
+        private String password;
+
+        private UserUpdateDtoBuilder() {
+        }
+
+        public UserUpdateDto build() {
+            return new UserUpdateDto(mail, fio, role, status, password);
+        }
+
+        public UserUpdateDtoBuilder setMail(String mail) {
+            this.mail = mail;
+            return this;
+        }
+
+        public UserUpdateDtoBuilder setFio(String fio) {
+            this.fio = fio;
+            return this;
+        }
+
+        public UserUpdateDtoBuilder setRole(String role) {
+            this.role = role;
+            return this;
+        }
+
+        public UserUpdateDtoBuilder setStatus(String status) {
+            this.status = status;
+            return this;
+        }
+
+        public UserUpdateDtoBuilder setPassword(String password) {
+            this.password = password;
+            return this;
+        }
     }
 }
