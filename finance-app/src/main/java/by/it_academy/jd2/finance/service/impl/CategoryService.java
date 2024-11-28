@@ -35,7 +35,9 @@ public class CategoryService implements ICategoryService {
     @Override
     @Transactional
     public void create(CategoryDto dto) {
-        categoryRepository.saveAndFlush(mapper.toEntity(dto));
+        Category entity = mapper.toEntity(dto);
+        entity.setId(UUID.randomUUID());
+        categoryRepository.saveAndFlush(entity);
     }
 
     @Override
