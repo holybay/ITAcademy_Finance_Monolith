@@ -1,8 +1,6 @@
 package by.it_academy.jd2.finance.service.impl;
 
 import by.it_academy.jd2.finance.config.property.PageProperty;
-import by.it_academy.jd2.finance.platform.exception.AppAuthException;
-import by.it_academy.jd2.finance.platform.exception.ApplicationException;
 import by.it_academy.jd2.finance.platform.util.PageUtil;
 import by.it_academy.jd2.finance.repository.IUserRepository;
 import by.it_academy.jd2.finance.repository.entity.user.EUserRole;
@@ -72,7 +70,7 @@ public class UserService implements IUserService {
     @Override
     @Transactional(readOnly = true)
     public User getById(UUID id) {
-        return userRepository.findById(id).orElseThrow(() -> new ApplicationException("Haven't found a user with id: " + id));
+        return userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Haven't found a user with id: " + id));
     }
 
     @Override
