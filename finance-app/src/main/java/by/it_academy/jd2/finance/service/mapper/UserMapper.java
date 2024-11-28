@@ -4,6 +4,7 @@ import by.it_academy.jd2.finance.repository.entity.user.EUserRole;
 import by.it_academy.jd2.finance.repository.entity.user.EUserStatus;
 import by.it_academy.jd2.finance.repository.entity.user.User;
 import by.it_academy.jd2.finance.service.dto.UpdateCoordinate;
+import by.it_academy.jd2.finance.service.dto.user.UserAuditOutDto;
 import by.it_academy.jd2.finance.service.dto.user.UserCreateDto;
 import by.it_academy.jd2.finance.service.dto.user.UserOutDto;
 import by.it_academy.jd2.finance.service.dto.user.UserSelfCreateDto;
@@ -61,5 +62,14 @@ public class UserMapper {
                          .setRole(entity.getRole())
                          .setStatus(entity.getStatus())
                          .build();
+    }
+
+    public UserAuditOutDto toUserAuditOutDto(User entity) {
+        return UserAuditOutDto.builder()
+                              .setId(entity.getId())
+                              .setMail(entity.getMail())
+                              .setFio(entity.getFio())
+                              .setRole(entity.getRole())
+                              .build();
     }
 }
