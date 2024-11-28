@@ -31,8 +31,9 @@ public class ClassifierController {
     }
 
     @PostMapping("/currency")
-    public ResponseEntity<HttpStatus> createCurrency(@RequestBody @Valid CurrencyDto createDto) {
-        currencyService.create(createDto);
+    public ResponseEntity<HttpStatus> createCurrency(@RequestBody @Valid CurrencyDto createDto,
+                                                     @RequestHeader(AUTH_HEADER) String header) {
+        currencyService.create(createDto, JwtTokenHandler.getTokenFromHeader(header));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

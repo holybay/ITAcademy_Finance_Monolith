@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public interface ICurrencyService {
 
-    void create(CurrencyDto dto);
+    void create(CurrencyDto dto, String token);
 
     Currency getById(UUID id);
 
