@@ -15,6 +15,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.NoSuchElementException;
+import java.util.UUID;
+
 @Service
 public class OperationCategoryService implements IOperationCategoryService {
 
@@ -33,6 +36,13 @@ public class OperationCategoryService implements IOperationCategoryService {
     @Transactional
     public void create(OperationCategoryDto dto) {
         categoryRepository.saveAndFlush(mapper.toEntity(dto));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public OperationCategory getById(UUID id) {
+        return categoryRepository.findById(id).orElseThrow(() ->
+                new NoSuchElementException("Haven't found a category with id: " + id));
     }
 
     @Override
