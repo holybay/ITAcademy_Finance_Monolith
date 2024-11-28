@@ -9,7 +9,6 @@ import by.it_academy.jd2.finance.repository.entity.user.User;
 import by.it_academy.jd2.finance.service.IUserService;
 import by.it_academy.jd2.finance.service.dto.UpdateCoordinate;
 import by.it_academy.jd2.finance.service.dto.page.PageDto;
-import by.it_academy.jd2.finance.service.dto.user.CreateDtoCommon;
 import by.it_academy.jd2.finance.service.dto.user.UserCreateDto;
 import by.it_academy.jd2.finance.service.dto.user.UserSelfCreateDto;
 import by.it_academy.jd2.finance.service.dto.user.UserUpdateDto;
@@ -22,7 +21,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
@@ -52,7 +50,7 @@ public class UserService implements IUserService {
     @Override
     @Transactional
     public void create(UserCreateDto createDto) {
-        setCreateDtoSystemFields(createDto);
+        createDto.setId(UUID.randomUUID());
         createDto.setPassword(encoder.encode(createDto.getPassword()));
         userRepository.saveAndFlush(userMapper.toEntity(createDto));
     }
@@ -60,7 +58,7 @@ public class UserService implements IUserService {
     @Override
     @Transactional
     public void create(UserSelfCreateDto createDto) {
-        setCreateDtoSystemFields(createDto);
+        createDto.setId(UUID.randomUUID());
         createDto.setPassword(encoder.encode(createDto.getPassword()));
         createDto.setRole(EUserRole.USER.name());
         createDto.setStatus(EUserStatus.WAITING_ACTIVATION.name());
@@ -95,11 +93,5 @@ public class UserService implements IUserService {
         updateDto.setPassword(encoder.encode(updateDto.getPassword()));
         User entity = userMapper.toEntity(updateDto, coordinate);
         userRepository.saveAndFlush(entity);
-    }
-
-    private void setCreateDtoSystemFields(CreateDtoCommon dtoSystemFields) {
-        dtoSystemFields.setId(UUID.randomUUID());
-        dtoSystemFields.setCreatedAt(LocalDateTime.now());
-        dtoSystemFields.setUpdatedAt(dtoSystemFields.getCreatedAt());
     }
 }
