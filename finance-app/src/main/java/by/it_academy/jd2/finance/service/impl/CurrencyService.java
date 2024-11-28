@@ -48,7 +48,7 @@ public class CurrencyService implements ICurrencyService {
         auditService.create(AuditUnitCreateDto.builder()
                                               .setUserId(tokenHandler.getTokenDto(token).getUserId())
                                               .setText("Created a new Category!")
-                                              .setType(EEssenceType.USER)
+                                              .setType(EEssenceType.CURRENCY)
                                               .setEssenceTypeId(entity.getId())
                                               .build());
     }
