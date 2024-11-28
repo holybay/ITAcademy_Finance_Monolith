@@ -1,11 +1,10 @@
 package by.it_academy.jd2.finance.service.impl;
 
 import by.it_academy.jd2.finance.config.property.PageProperty;
-import by.it_academy.jd2.finance.platform.exception.ApplicationException;
 import by.it_academy.jd2.finance.platform.util.PageUtil;
 import by.it_academy.jd2.finance.repository.IAccountRepository;
 import by.it_academy.jd2.finance.repository.entity.account.Account;
-import by.it_academy.jd2.finance.service.IAccountOperationService;
+import by.it_academy.jd2.finance.repository.entity.account.EAccountType;
 import by.it_academy.jd2.finance.service.IAccountService;
 import by.it_academy.jd2.finance.service.ICurrencyService;
 import by.it_academy.jd2.finance.service.IUserService;
@@ -23,24 +22,23 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Service
 public class AccountService implements IAccountService {
 
     private final IAccountRepository accountRepository;
-    private final IAccountOperationService operationService;
     private final IUserService userService;
     private final ICurrencyService currencyService;
     private final AccountMapper mapper;
     private final JwtTokenHandler tokenHandler;
     private final PageProperty pageProperty;
 
-    public AccountService(IAccountRepository accountRepository, IAccountOperationService operationService,
-                          IUserService userService, ICurrencyService currencyService, AccountMapper mapper,
-                          JwtTokenHandler tokenHandler, PageProperty pageProperty) {
+    public AccountService(IAccountRepository accountRepository, IUserService userService, ICurrencyService currencyService,
+                          AccountMapper mapper, JwtTokenHandler tokenHandler, PageProperty pageProperty) {
         this.accountRepository = accountRepository;
-        this.operationService = operationService;
         this.userService = userService;
         this.currencyService = currencyService;
         this.mapper = mapper;
@@ -49,7 +47,7 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = {SQLException.class})
     public void create(AccountCreateDto createDto, String token) {
         UUID userId = tokenHandler.getTokenDto(token).getUserId();
         userService.getUserValidator().validate(userId);
@@ -63,11 +61,16 @@ public class AccountService implements IAccountService {
         UUID userId = tokenHandler.getTokenDto(token).getUserId();
         userService.getUserValidator().validate(userId);
         return accountRepository.findByIdAndUserId(id, userId)
-                                .map(acc -> {
-                                    acc.setBalance(operationService.getAccountBalance(id));
-                                    return mapper.toOutDto(acc);
-                                })
-                                .orElseThrow(() -> new ApplicationException(
+                                .map(mapper::toOutDto)
+                                .orElseThrow(() -> new NoSuchElementException(
+                                        String.format("Haven't found an account with id = [%s] for user: %s !", id, userId)));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Account getById(UUID id, UUID userId) {
+        return accountRepository.findByIdAndUserId(id, userId)
+                                .orElseThrow(() -> new NoSuchElementException(
                                         String.format("Haven't found an account with id = [%s] for user: %s !", id, userId)));
     }
 
@@ -81,20 +84,27 @@ public class AccountService implements IAccountService {
         PageRequest pageReq = PageUtil.getPageRequest(pageDto.getPage(), pageDto.getSize(), pageProperty,
                 accountRepository.countByUserId(userId), sort);
         Page<AccountOutDto> accountPage = accountRepository.findAllByUserId(pageReq, userId)
-                                                           .map(acc -> {
-                                                               acc.setBalance(operationService.getAccountBalance(acc.getId()));
-                                                               return mapper.toOutDto(acc);
-                                                           });
+                                                           .map(mapper::toOutDto);
         return PageOf.convert(accountPage);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = {SQLException.class})
     public void update(AccountUpdateDto updateDto, UpdateCoordinate coordinate, String token) {
         UUID userId = tokenHandler.getTokenDto(token).getUserId();
         userService.getUserValidator().validate(userId);
-        Account entity = mapper.toEntity(updateDto, coordinate, userService.getById(userId),
-                currencyService.getById(updateDto.getCurrencyId()));
-        accountRepository.saveAndFlush(entity);
+        Account account = this.getById(coordinate.getId(), userId);
+        if (!account.getUpdatedAt().isEqual(coordinate.getUpdatedAt())) {
+            throw new IllegalArgumentException("Updated data is outdated!");
+        }
+        settingUpdates(updateDto, account);
+        accountRepository.saveAndFlush(account);
+    }
+
+    private void settingUpdates(AccountUpdateDto updateDto, Account account) {
+        account.setTitle(updateDto.getTitle());
+        account.setDescription(updateDto.getDescription());
+        account.setType(Enum.valueOf(EAccountType.class, updateDto.getType()));
+        account.setCurrency(currencyService.getById(updateDto.getCurrencyId()));
     }
 }

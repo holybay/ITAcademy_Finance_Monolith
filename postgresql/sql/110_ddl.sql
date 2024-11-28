@@ -52,6 +52,7 @@ CREATE TABLE app.accounts
 id uuid,
 title character varying NOT NULL,
 description character varying NOT NULL,
+balance NUMERIC(13,2) NOT NULL,
 type character varying NOT NULL,
 currency_id uuid NOT NULL,
 user_id uuid NOT NULL,

@@ -1,6 +1,7 @@
 package by.it_academy.jd2.finance.service;
 
 
+import by.it_academy.jd2.finance.repository.entity.account.Account;
 import by.it_academy.jd2.finance.service.dto.UpdateCoordinate;
 import by.it_academy.jd2.finance.service.dto.account.AccountCreateDto;
 import by.it_academy.jd2.finance.service.dto.account.AccountOutDto;
@@ -15,6 +16,8 @@ public interface IAccountService {
     void create(AccountCreateDto createDto, String token);
 
     AccountOutDto getById(UUID id, String token);
+
+    Account getById(UUID id, UUID userId);
 
     PageOf<AccountOutDto> getAll(PageDto pageDto, String token);
 
