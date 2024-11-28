@@ -33,7 +33,9 @@ public class CurrencyService implements ICurrencyService {
 
     @Override
     public void create(CurrencyDto dto) {
-        currencyRepository.saveAndFlush(mapper.toEntity(dto));
+        Currency entity = mapper.toEntity(dto);
+        entity.setId(UUID.randomUUID());
+        currencyRepository.saveAndFlush(entity);
     }
 
     @Override

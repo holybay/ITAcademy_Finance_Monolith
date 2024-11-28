@@ -3,6 +3,7 @@ package by.it_academy.jd2.finance.repository.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -53,6 +54,12 @@ public class Currency {
 
     public static CurrencyBuilder builder() {
         return new CurrencyBuilder();
+    }
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = this.createdAt;
     }
 
     public UUID getId() {
