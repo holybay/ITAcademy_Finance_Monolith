@@ -1,9 +1,9 @@
 package by.it_academy.jd2.finance.service.mapper;
 
 import by.it_academy.jd2.finance.repository.entity.Currency;
-import by.it_academy.jd2.finance.repository.entity.OperationCategory;
+import by.it_academy.jd2.finance.repository.entity.Category;
 import by.it_academy.jd2.finance.service.dto.classifier.CurrencyDto;
-import by.it_academy.jd2.finance.service.dto.classifier.OperationCategoryDto;
+import by.it_academy.jd2.finance.service.dto.classifier.CategoryDto;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -29,21 +29,21 @@ public class ClassifierMapper {
                           .build();
     }
 
-    public OperationCategory toEntity(OperationCategoryDto dto) {
-        return OperationCategory.builder()
-                                .setId(dto.getId())
-                                .setCreatedAt(dto.getCreatedAt())
-                                .setUpdatedAt(dto.getUpdatedAt())
-                                .setTitle(dto.getTitle())
-                                .build();
+    public Category toEntity(CategoryDto dto) {
+        return Category.builder()
+                       .setId(dto.getId())
+                       .setCreatedAt(dto.getCreatedAt())
+                       .setUpdatedAt(dto.getUpdatedAt())
+                       .setTitle(dto.getTitle())
+                       .build();
     }
 
-    public OperationCategoryDto toCategoryDto(OperationCategory entity) {
-        return OperationCategoryDto.builder()
-                                   .setId(entity.getId())
-                                   .setCreatedAt(entity.getCreatedAt())
-                                   .setUpdatedAt(entity.getUpdatedAt())
-                                   .setTitle(entity.getTitle())
-                                   .build();
+    public CategoryDto toCategoryDto(Category entity) {
+        return CategoryDto.builder()
+                          .setId(entity.getId())
+                          .setCreatedAt(entity.getCreatedAt())
+                          .setUpdatedAt(entity.getUpdatedAt())
+                          .setTitle(entity.getTitle())
+                          .build();
     }
 }

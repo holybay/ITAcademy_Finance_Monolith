@@ -1,32 +1,49 @@
-package by.it_academy.jd2.finance.service.dto.classifier;
+package by.it_academy.jd2.finance.repository.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.persistence.Version;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
-public class OperationCategoryDto {
+@Entity
+@Table(name = "operation_categories")
+public class Category {
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @Id
+    @Column(name = "id", updatable = false)
     private UUID id;
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+
+    @Column(name = "created_at", updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+
+    @Column(name = "updated_at")
+    @Version
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime updatedAt;
-    @NotBlank(message = "Title field can't be blank!")
+
+    @Column(name = "title")
     private String title;
 
-    private OperationCategoryDto(UUID id, LocalDateTime createdAt, LocalDateTime updatedAt, String title) {
+    public Category() {
+    }
+
+    private Category(UUID id, LocalDateTime createdAt, LocalDateTime updatedAt, String title) {
         this.id = id;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.title = title;
     }
 
-    public static OperationCategoryDtoBuilder builder() {
-        return new OperationCategoryDtoBuilder();
+    public static CategoryBuilder builder() {
+        return new CategoryBuilder();
     }
 
     public UUID getId() {
@@ -65,7 +82,7 @@ public class OperationCategoryDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OperationCategoryDto that = (OperationCategoryDto) o;
+        Category that = (Category) o;
         return Objects.equals(id, that.id) && Objects.equals(createdAt, that.createdAt)
                 && Objects.equals(updatedAt, that.updatedAt) && Objects.equals(title, that.title);
     }
@@ -77,7 +94,7 @@ public class OperationCategoryDto {
 
     @Override
     public String toString() {
-        return "OperationCategoryDto{" +
+        return "Category{" +
                 "id=" + id +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
@@ -85,36 +102,36 @@ public class OperationCategoryDto {
                 '}';
     }
 
-    public static class OperationCategoryDtoBuilder {
+    public static class CategoryBuilder {
 
         private UUID id;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
         private String title;
 
-        private OperationCategoryDtoBuilder() {
+        private CategoryBuilder() {
         }
 
-        public OperationCategoryDto build() {
-            return new OperationCategoryDto(id, createdAt, updatedAt, title);
+        public Category build() {
+            return new Category(id, createdAt, updatedAt, title);
         }
 
-        public OperationCategoryDtoBuilder setId(UUID id) {
+        public CategoryBuilder setId(UUID id) {
             this.id = id;
             return this;
         }
 
-        public OperationCategoryDtoBuilder setCreatedAt(LocalDateTime createdAt) {
+        public CategoryBuilder setCreatedAt(LocalDateTime createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        public OperationCategoryDtoBuilder setUpdatedAt(LocalDateTime updatedAt) {
+        public CategoryBuilder setUpdatedAt(LocalDateTime updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }
 
-        public OperationCategoryDtoBuilder setTitle(String title) {
+        public CategoryBuilder setTitle(String title) {
             this.title = title;
             return this;
         }

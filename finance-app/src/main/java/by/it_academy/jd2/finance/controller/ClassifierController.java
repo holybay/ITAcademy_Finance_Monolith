@@ -1,9 +1,9 @@
 package by.it_academy.jd2.finance.controller;
 
 import by.it_academy.jd2.finance.service.ICurrencyService;
-import by.it_academy.jd2.finance.service.IOperationCategoryService;
+import by.it_academy.jd2.finance.service.ICategoryService;
 import by.it_academy.jd2.finance.service.dto.classifier.CurrencyDto;
-import by.it_academy.jd2.finance.service.dto.classifier.OperationCategoryDto;
+import by.it_academy.jd2.finance.service.dto.classifier.CategoryDto;
 import by.it_academy.jd2.finance.service.dto.page.PageDto;
 import by.it_academy.jd2.finance.service.dto.page.PageOf;
 import jakarta.validation.Valid;
@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class ClassifierController {
 
     private final ICurrencyService currencyService;
-    private final IOperationCategoryService categoryService;
+    private final ICategoryService categoryService;
 
-    public ClassifierController(ICurrencyService currencyService, IOperationCategoryService categoryService) {
+    public ClassifierController(ICurrencyService currencyService, ICategoryService categoryService) {
         this.currencyService = currencyService;
         this.categoryService = categoryService;
     }
@@ -40,14 +40,14 @@ public class ClassifierController {
     }
 
     @PostMapping("/operation/category")
-    public ResponseEntity<HttpStatus> createCategory(@RequestBody @Valid OperationCategoryDto createDto) {
+    public ResponseEntity<HttpStatus> createCategory(@RequestBody @Valid CategoryDto createDto) {
         categoryService.create(createDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/operation/category")
-    public ResponseEntity<PageOf<OperationCategoryDto>> getAllCategories(PageDto pageDto) {
-        PageOf<OperationCategoryDto> users = categoryService.getAll(pageDto);
+    public ResponseEntity<PageOf<CategoryDto>> getAllCategories(PageDto pageDto) {
+        PageOf<CategoryDto> users = categoryService.getAll(pageDto);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 }

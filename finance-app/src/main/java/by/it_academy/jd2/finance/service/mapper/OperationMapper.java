@@ -2,7 +2,7 @@ package by.it_academy.jd2.finance.service.mapper;
 
 import by.it_academy.jd2.finance.repository.entity.Operation;
 import by.it_academy.jd2.finance.repository.entity.Currency;
-import by.it_academy.jd2.finance.repository.entity.OperationCategory;
+import by.it_academy.jd2.finance.repository.entity.Category;
 import by.it_academy.jd2.finance.repository.entity.account.Account;
 import by.it_academy.jd2.finance.service.dto.UpdateCoordinate;
 import by.it_academy.jd2.finance.service.dto.operation.OperationCreateDto;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class OperationMapper {
 
     public Operation toEntity(OperationCreateDto dto, Account account, Currency currency,
-                              OperationCategory category) {
+                              Category category) {
         return Operation.builder()
                         .setDate(dto.getDate())
                         .setDescription(dto.getDescription())
@@ -26,7 +26,7 @@ public class OperationMapper {
     }
 
     public Operation toEntity(OperationUpdateDto dto, UpdateCoordinate coordinate, Account account, Currency currency,
-                              OperationCategory category) {
+                              Category category) {
         return Operation.builder()
                         .setId(coordinate.getId())
                         .setUpdatedAt(coordinate.getUpdatedAt())

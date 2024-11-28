@@ -44,7 +44,7 @@ public class Operation {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
-    private OperationCategory category;
+    private Category category;
 
     @Column(name = "amount")
     private BigDecimal value;
@@ -61,7 +61,7 @@ public class Operation {
     }
 
     public Operation(UUID id, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime date,
-                     String description, OperationCategory category, BigDecimal value, Currency currency,
+                     String description, Category category, BigDecimal value, Currency currency,
                      Account account) {
         this.id = id;
         this.createdAt = createdAt;
@@ -125,11 +125,11 @@ public class Operation {
         this.description = description;
     }
 
-    public OperationCategory getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(OperationCategory category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
@@ -196,7 +196,7 @@ public class Operation {
         private LocalDateTime updatedAt;
         private LocalDateTime date;
         private String description;
-        private OperationCategory category;
+        private Category category;
         private BigDecimal value;
         private Currency currency;
         private Account account;
@@ -229,7 +229,7 @@ public class Operation {
             return this;
         }
 
-        public OperationBuilder setCategory(OperationCategory category) {
+        public OperationBuilder setCategory(Category category) {
             this.category = category;
             return this;
         }

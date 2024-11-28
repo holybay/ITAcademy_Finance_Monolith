@@ -11,7 +11,7 @@ import by.it_academy.jd2.finance.repository.entity.account.Account;
 import by.it_academy.jd2.finance.service.IOperationService;
 import by.it_academy.jd2.finance.service.IAccountService;
 import by.it_academy.jd2.finance.service.ICurrencyService;
-import by.it_academy.jd2.finance.service.IOperationCategoryService;
+import by.it_academy.jd2.finance.service.ICategoryService;
 import by.it_academy.jd2.finance.service.dto.UpdateCoordinate;
 import by.it_academy.jd2.finance.service.dto.operation.OperationCreateDto;
 import by.it_academy.jd2.finance.service.dto.operation.OperationOutDto;
@@ -37,12 +37,12 @@ public class OperationService implements IOperationService {
     private final IOperationRepository operationRepository;
     private final IAccountService accountService;
     private final ICurrencyService currencyService;
-    private final IOperationCategoryService categoryService;
+    private final ICategoryService categoryService;
     private final JwtTokenHandler tokenHandler;
     private final OperationMapper mapper;
     private final PageProperty pageProperty;
 
-    public OperationService(IOperationRepository operationRepository, IAccountService accountService, ICurrencyService currencyService, IOperationCategoryService categoryService, JwtTokenHandler tokenHandler, OperationMapper mapper, PageProperty pageProperty) {
+    public OperationService(IOperationRepository operationRepository, IAccountService accountService, ICurrencyService currencyService, ICategoryService categoryService, JwtTokenHandler tokenHandler, OperationMapper mapper, PageProperty pageProperty) {
         this.operationRepository = operationRepository;
         this.accountService = accountService;
         this.currencyService = currencyService;
