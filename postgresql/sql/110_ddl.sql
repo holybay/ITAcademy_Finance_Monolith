@@ -86,3 +86,19 @@ CONSTRAINT acc_operations_accounts_fk  FOREIGN KEY (account_id) REFERENCES app.a
 
 ALTER TABLE IF EXISTS app.account_operations
     OWNER to postgres;
+
+CREATE TABLE app.audit_units
+(
+id uuid,
+user_id uuid NOT NULL,
+text character varying,
+type character varying,
+essence_type_id uuid NOT NULL,
+created_at TIMESTAMP(3) NOT NULL,
+updated_at TIMESTAMP(3) NOT NULL,
+CONSTRAINT audit_pk PRIMARY KEY (id),
+CONSTRAINT audit_users_fk  FOREIGN KEY (user_id) REFERENCES app.users(id)
+);
+
+ALTER TABLE IF EXISTS app.audit_units
+    OWNER to postgres;
