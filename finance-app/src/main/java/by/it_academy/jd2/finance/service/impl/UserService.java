@@ -1,6 +1,7 @@
 package by.it_academy.jd2.finance.service.impl;
 
 import by.it_academy.jd2.finance.config.property.PageProperty;
+import by.it_academy.jd2.finance.platform.exception.ValidationException;
 import by.it_academy.jd2.finance.platform.util.PageUtil;
 import by.it_academy.jd2.finance.repository.IUserRepository;
 import by.it_academy.jd2.finance.repository.entity.auditUnit.EEssenceType;
@@ -58,9 +59,12 @@ public class UserService implements IUserService {
     @Override
     @Transactional
     public void create(UserCreateDto createDto, String token) {
+        emailCheck(createDto.getMail());
+
         createDto.setId(UUID.randomUUID());
         createDto.setPassword(encoder.encode(createDto.getPassword()));
         userRepository.saveAndFlush(userMapper.toEntity(createDto));
+
         auditService.create(AuditUnitCreateDto.builder()
                                               .setUserId(tokenHandler.getTokenDto(token).getUserId())
                                               .setText("Created a new user!")
@@ -72,11 +76,14 @@ public class UserService implements IUserService {
     @Override
     @Transactional
     public void create(UserSelfCreateDto createDto) {
+        emailCheck(createDto.getMail());
+
         createDto.setId(UUID.randomUUID());
         createDto.setPassword(encoder.encode(createDto.getPassword()));
         createDto.setRole(EUserRole.USER.name());
         createDto.setStatus(EUserStatus.WAITING_ACTIVATION.name());
         userRepository.saveAndFlush(userMapper.toEntity(createDto));
+
         auditService.create(AuditUnitCreateDto.builder()
                                               .setUserId(createDto.getId())
                                               .setText("Created a new user!")
@@ -113,5 +120,12 @@ public class UserService implements IUserService {
         updateDto.setPassword(encoder.encode(updateDto.getPassword()));
         User entity = userMapper.toEntity(updateDto, coordinate);
         userRepository.saveAndFlush(entity);
+    }
+
+    private void emailCheck(String mail) {
+        if (userRepository.findByMail(mail).isPresent()) {
+            throw new ValidationException("mail",
+                    String.format("User with %s email already exists", mail));
+        }
     }
 }
