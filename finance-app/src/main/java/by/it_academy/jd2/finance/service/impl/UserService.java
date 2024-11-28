@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Service
@@ -77,7 +78,7 @@ public class UserService implements IUserService {
     @Override
     @Transactional(readOnly = true)
     public User getByMail(String mail) {
-        return userRepository.findByMail(mail).orElseThrow(() -> new AppAuthException("Haven't found a user with mail: " + mail));
+        return userRepository.findByMail(mail).orElseThrow(() -> new NoSuchElementException("Haven't found a user with mail: " + mail));
     }
 
     @Override
