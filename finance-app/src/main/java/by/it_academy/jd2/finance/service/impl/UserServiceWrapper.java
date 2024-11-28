@@ -32,7 +32,7 @@ public class UserServiceWrapper implements IUserServiceWrapper {
 
     @Override
     public void create(UserCreateDto createDto, String token) {
-        userService.create(createDto);
+        userService.create(createDto, token);
     }
 
     @Override
