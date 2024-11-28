@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public interface ICategoryService {
 
-    void create(CategoryDto dto);
+    void create(CategoryDto dto, String token);
 
     Category getById(UUID id);
 
