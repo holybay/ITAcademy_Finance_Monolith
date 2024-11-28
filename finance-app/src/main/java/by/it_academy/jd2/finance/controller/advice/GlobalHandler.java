@@ -72,7 +72,6 @@ public class GlobalHandler {
 
     @ExceptionHandler
     public ResponseEntity<AppExceptionDtoStructured> handle(MethodArgumentNotValidException e) {
-        AppExceptionDtoStructured error = new AppExceptionDtoStructured();
         List<StructuredExceptionDto> errorList = e.getBindingResult().getFieldErrors().stream()
                                                   .map(er -> new StructuredExceptionDto(
                                                           er.getField(),
