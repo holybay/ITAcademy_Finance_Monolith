@@ -16,6 +16,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestControllerAdvice
 public class GlobalHandler {
@@ -23,6 +24,16 @@ public class GlobalHandler {
     @ExceptionHandler
     public ResponseEntity<List<AppExceptionDtoSimple>> handle(Exception e) {
         return new ResponseEntity<>(ExceptionDtoUtil.getAppExceptionSimpleDto(e), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<List<AppExceptionDtoSimple>> handle(NoSuchElementException e) {
+        return new ResponseEntity<>(ExceptionDtoUtil.getAppExceptionSimpleDto(e), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<List<AppExceptionDtoSimple>> handle(IllegalArgumentException e) {
+        return new ResponseEntity<>(ExceptionDtoUtil.getAppExceptionSimpleDto(e), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
