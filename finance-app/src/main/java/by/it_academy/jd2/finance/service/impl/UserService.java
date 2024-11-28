@@ -77,6 +77,12 @@ public class UserService implements IUserService {
         createDto.setRole(EUserRole.USER.name());
         createDto.setStatus(EUserStatus.WAITING_ACTIVATION.name());
         userRepository.saveAndFlush(userMapper.toEntity(createDto));
+        auditService.create(AuditUnitCreateDto.builder()
+                                              .setUserId(createDto.getId())
+                                              .setText("Created a new user!")
+                                              .setType(EEssenceType.USER)
+                                              .setEssenceTypeId(createDto.getId())
+                                              .build());
     }
 
     @Override
