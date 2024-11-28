@@ -15,7 +15,7 @@ public interface IUserService {
 
     IUserValidator getUserValidator();
 
-    void create(UserCreateDto createDto);
+    void create(UserCreateDto createDto, String token);
 
     void create(UserSelfCreateDto createDto);
 

@@ -14,7 +14,7 @@ import java.util.UUID;
 @Service
 public interface IUserServiceWrapper {
 
-    void create(UserCreateDto createDto);
+    void create(UserCreateDto createDto, String token);
 
     void create(UserSelfCreateDto createDto);
 

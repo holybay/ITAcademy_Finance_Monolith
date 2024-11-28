@@ -7,6 +7,7 @@ import by.it_academy.jd2.finance.service.dto.page.PageOf;
 import by.it_academy.jd2.finance.service.dto.user.UserCreateDto;
 import by.it_academy.jd2.finance.service.dto.user.UserOutDto;
 import by.it_academy.jd2.finance.service.dto.user.UserUpdateDto;
+import by.it_academy.jd2.finance.service.util.JwtTokenHandler;
 import by.it_academy.jd2.finance.service.validation.UserExists;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,6 +31,7 @@ public class AdminController {
 
     private static final String PATH_VAR_ID_NAME = "uuid";
     private static final String PATH_VAR_DT_UPDATE = "dt_update";
+    private static final String AUTH_HEADER = "Authorization";
     private final IUserServiceWrapper userServiceWrapper;
 
     public AdminController(IUserServiceWrapper userServiceWrapper) {
@@ -36,8 +39,9 @@ public class AdminController {
     }
 
     @PostMapping
-    public ResponseEntity<HttpStatus> create(@RequestBody @Valid UserCreateDto createDto) {
-        userServiceWrapper.create(createDto);
+    public ResponseEntity<HttpStatus> create(@RequestBody @Valid UserCreateDto createDto,
+                                             @RequestHeader(AUTH_HEADER) String header) {
+        userServiceWrapper.create(createDto, JwtTokenHandler.getTokenFromHeader(header));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
