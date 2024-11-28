@@ -1,11 +1,10 @@
 package by.it_academy.jd2.finance.controller;
 
-import by.it_academy.jd2.finance.service.IAccountOperationService;
+import by.it_academy.jd2.finance.service.IOperationService;
 import by.it_academy.jd2.finance.service.dto.UpdateCoordinate;
-import by.it_academy.jd2.finance.service.dto.operation.AccountOperationCoordinate;
-import by.it_academy.jd2.finance.service.dto.operation.AccountOperationCreateDto;
-import by.it_academy.jd2.finance.service.dto.operation.AccountOperationOutDto;
-import by.it_academy.jd2.finance.service.dto.operation.AccountOperationUpdateDto;
+import by.it_academy.jd2.finance.service.dto.operation.OperationCreateDto;
+import by.it_academy.jd2.finance.service.dto.operation.OperationOutDto;
+import by.it_academy.jd2.finance.service.dto.operation.OperationUpdateDto;
 import by.it_academy.jd2.finance.service.dto.page.PageDto;
 import by.it_academy.jd2.finance.service.dto.page.PageOf;
 import by.it_academy.jd2.finance.service.util.JwtTokenHandler;
@@ -27,31 +26,31 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/account/{uuid}/operation")
-public class AccountOperationController {
+public class OperationController {
 
     private static final String PATH_VAR_ACCOUNT_ID = "uuid";
     private static final String PATH_VAR_DT_UPDATE = "dt_update";
     private static final String AUTH_HEADER = "Authorization";
     private static final String PATH_VAR_OPERATION_ID = "uuid_operation";
-    private final IAccountOperationService operationService;
+    private final IOperationService operationService;
 
-    public AccountOperationController(IAccountOperationService operationService) {
+    public OperationController(IOperationService operationService) {
         this.operationService = operationService;
     }
 
     @PostMapping
     public ResponseEntity<HttpStatus> create(@PathVariable(PATH_VAR_ACCOUNT_ID) UUID accountId,
-                                             @RequestBody @Valid AccountOperationCreateDto createDto,
+                                             @RequestBody @Valid OperationCreateDto createDto,
                                              @RequestHeader(AUTH_HEADER) String header) {
         operationService.create(accountId, createDto, JwtTokenHandler.getTokenFromHeader(header));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<PageOf<AccountOperationOutDto>> getAll(@PathVariable(PATH_VAR_ACCOUNT_ID) UUID accountId,
-                                                                 @Valid PageDto pageDto,
-                                                                 @RequestHeader(AUTH_HEADER) String header) {
-        PageOf<AccountOperationOutDto> users = operationService.getAll(accountId, pageDto,
+    public ResponseEntity<PageOf<OperationOutDto>> getAll(@PathVariable(PATH_VAR_ACCOUNT_ID) UUID accountId,
+                                                          @Valid PageDto pageDto,
+                                                          @RequestHeader(AUTH_HEADER) String header) {
+        PageOf<OperationOutDto> users = operationService.getAll(accountId, pageDto,
                 JwtTokenHandler.getTokenFromHeader(header));
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
@@ -60,7 +59,7 @@ public class AccountOperationController {
     public ResponseEntity<HttpStatus> update(@PathVariable(PATH_VAR_ACCOUNT_ID) UUID accountId,
                                              @PathVariable(PATH_VAR_DT_UPDATE) LocalDateTime updatedAt,
                                              @PathVariable(PATH_VAR_OPERATION_ID) UUID operationId,
-                                             @RequestBody @Valid AccountOperationUpdateDto updateDto,
+                                             @RequestBody @Valid OperationUpdateDto updateDto,
                                              @RequestHeader(AUTH_HEADER) String header) {
         operationService.update(updateDto, UpdateCoordinate.builder()
                                                            .setId(operationId)

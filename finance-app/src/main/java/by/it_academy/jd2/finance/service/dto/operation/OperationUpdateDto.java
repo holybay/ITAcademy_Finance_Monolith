@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
-public class AccountOperationUpdateDto {
+public class OperationUpdateDto {
 
     @NotNull(message = "Operation date can't be null!")
     @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
@@ -77,7 +77,7 @@ public class AccountOperationUpdateDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AccountOperationUpdateDto that = (AccountOperationUpdateDto) o;
+        OperationUpdateDto that = (OperationUpdateDto) o;
         return Objects.equals(date, that.date) && Objects.equals(description, that.description)
                 && Objects.equals(categoryId, that.categoryId) && Objects.equals(value, that.value)
                 && Objects.equals(currencyId, that.currencyId);
@@ -90,7 +90,7 @@ public class AccountOperationUpdateDto {
 
     @Override
     public String toString() {
-        return "AccountOperationUpdateDto{" +
+        return "OperationUpdateDto{" +
                 "date=" + date +
                 ", description='" + description + '\'' +
                 ", categoryId=" + categoryId +

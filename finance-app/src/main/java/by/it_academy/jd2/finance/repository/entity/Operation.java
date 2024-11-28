@@ -20,7 +20,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "account_operations")
-public class AccountOperation {
+public class Operation {
 
     @Id
     @Column(name = "id", updatable = false)
@@ -57,12 +57,12 @@ public class AccountOperation {
     @JoinColumn(name = "account_id")
     private Account account;
 
-    public AccountOperation() {
+    public Operation() {
     }
 
-    public AccountOperation(UUID id, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime date,
-                            String description, OperationCategory category, BigDecimal value, Currency currency,
-                            Account account) {
+    public Operation(UUID id, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime date,
+                     String description, OperationCategory category, BigDecimal value, Currency currency,
+                     Account account) {
         this.id = id;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -74,8 +74,8 @@ public class AccountOperation {
         this.account = account;
     }
 
-    public static AccountOperationBuilder builder() {
-        return new AccountOperationBuilder();
+    public static OperationBuilder builder() {
+        return new OperationBuilder();
     }
 
     @PrePersist
@@ -161,7 +161,7 @@ public class AccountOperation {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AccountOperation operation = (AccountOperation) o;
+        Operation operation = (Operation) o;
         return Objects.equals(id, operation.id) && Objects.equals(createdAt, operation.createdAt)
                 && Objects.equals(updatedAt, operation.updatedAt) && Objects.equals(date, operation.date)
                 && Objects.equals(description, operation.description) && Objects.equals(category, operation.category)
@@ -176,7 +176,7 @@ public class AccountOperation {
 
     @Override
     public String toString() {
-        return "AccountOperation{" +
+        return "Operation{" +
                 "id=" + id +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
@@ -189,7 +189,7 @@ public class AccountOperation {
                 '}';
     }
 
-    public static class AccountOperationBuilder {
+    public static class OperationBuilder {
 
         private UUID id;
         private LocalDateTime createdAt;
@@ -201,56 +201,56 @@ public class AccountOperation {
         private Currency currency;
         private Account account;
 
-        private AccountOperationBuilder() {
+        private OperationBuilder() {
         }
 
-        public AccountOperationBuilder setId(UUID id) {
+        public OperationBuilder setId(UUID id) {
             this.id = id;
             return this;
         }
 
-        public AccountOperationBuilder setCreatedAt(LocalDateTime createdAt) {
+        public OperationBuilder setCreatedAt(LocalDateTime createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        public AccountOperationBuilder setUpdatedAt(LocalDateTime updatedAt) {
+        public OperationBuilder setUpdatedAt(LocalDateTime updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }
 
-        public AccountOperationBuilder setDate(LocalDateTime date) {
+        public OperationBuilder setDate(LocalDateTime date) {
             this.date = date;
             return this;
         }
 
-        public AccountOperationBuilder setDescription(String description) {
+        public OperationBuilder setDescription(String description) {
             this.description = description;
             return this;
         }
 
-        public AccountOperationBuilder setCategory(OperationCategory category) {
+        public OperationBuilder setCategory(OperationCategory category) {
             this.category = category;
             return this;
         }
 
-        public AccountOperationBuilder setValue(BigDecimal value) {
+        public OperationBuilder setValue(BigDecimal value) {
             this.value = value;
             return this;
         }
 
-        public AccountOperationBuilder setCurrency(Currency currency) {
+        public OperationBuilder setCurrency(Currency currency) {
             this.currency = currency;
             return this;
         }
 
-        public AccountOperationBuilder setAccount(Account account) {
+        public OperationBuilder setAccount(Account account) {
             this.account = account;
             return this;
         }
 
-        public AccountOperation build() {
-            return new AccountOperation(id, createdAt, updatedAt, date, description, category, value, currency, account);
+        public Operation build() {
+            return new Operation(id, createdAt, updatedAt, date, description, category, value, currency, account);
         }
     }
 }
