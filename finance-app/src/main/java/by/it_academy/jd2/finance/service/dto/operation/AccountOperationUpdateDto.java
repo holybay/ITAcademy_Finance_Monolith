@@ -1,6 +1,8 @@
 package by.it_academy.jd2.finance.service.dto.operation;
 
+import by.it_academy.jd2.finance.platform.util.CustomLocalDateTimeDeserializer;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -13,6 +15,7 @@ import java.util.UUID;
 public class AccountOperationUpdateDto {
 
     @NotNull(message = "Operation date can't be null!")
+    @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
     private LocalDateTime date;
 
     @NotBlank(message = "Operation description can't be blank!")
