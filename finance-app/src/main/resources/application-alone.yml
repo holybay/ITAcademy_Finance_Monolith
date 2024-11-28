@@ -14,6 +14,18 @@ spring:
     properties:
       hibernate:
         default_schema: app
+  mail:
+    host: smtp.mail.ru
+    port: 465
+    username: jlk.nekto@mail.ru
+    password: Uyv3QKHCsXNCRyPwgLUB
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
 #Custom properties
 application:
   pagination:
