@@ -1,8 +1,8 @@
 package by.it_academy.jd2.finance.service.mapper;
 
-import by.it_academy.jd2.finance.repository.entity.Operation;
-import by.it_academy.jd2.finance.repository.entity.Currency;
 import by.it_academy.jd2.finance.repository.entity.Category;
+import by.it_academy.jd2.finance.repository.entity.Currency;
+import by.it_academy.jd2.finance.repository.entity.Operation;
 import by.it_academy.jd2.finance.repository.entity.account.Account;
 import by.it_academy.jd2.finance.service.dto.UpdateCoordinate;
 import by.it_academy.jd2.finance.service.dto.operation.OperationCreateDto;
