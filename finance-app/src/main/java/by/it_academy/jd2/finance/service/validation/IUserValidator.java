@@ -4,6 +4,6 @@ import java.util.UUID;
 
 public interface IUserValidator {
 
-    void validate(UUID userId);
+    boolean validate(UUID userId);
 
 }

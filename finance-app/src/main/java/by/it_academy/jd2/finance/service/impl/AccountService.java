@@ -50,7 +50,6 @@ public class AccountService implements IAccountService {
     @Transactional(rollbackFor = {SQLException.class})
     public void create(AccountCreateDto createDto, String token) {
         UUID userId = tokenHandler.getTokenDto(token).getUserId();
-        userService.getUserValidator().validate(userId);
         accountRepository.saveAndFlush(mapper.toEntity(createDto, userService.getById(userId),
                 currencyService.getById(createDto.getCurrencyId())));
     }
@@ -59,7 +58,6 @@ public class AccountService implements IAccountService {
     @Transactional(readOnly = true)
     public AccountOutDto getById(UUID id, String token) {
         UUID userId = tokenHandler.getTokenDto(token).getUserId();
-        userService.getUserValidator().validate(userId);
         return accountRepository.findByIdAndUserId(id, userId)
                                 .map(mapper::toOutDto)
                                 .orElseThrow(() -> new NoSuchElementException(
@@ -92,7 +90,6 @@ public class AccountService implements IAccountService {
     @Transactional(rollbackFor = {SQLException.class})
     public void update(AccountUpdateDto updateDto, UpdateCoordinate coordinate, String token) {
         UUID userId = tokenHandler.getTokenDto(token).getUserId();
-        userService.getUserValidator().validate(userId);
         Account account = this.getById(coordinate.getId(), userId);
         if (!account.getUpdatedAt().isEqual(coordinate.getUpdatedAt())) {
             throw new IllegalArgumentException("Updated data is outdated!");

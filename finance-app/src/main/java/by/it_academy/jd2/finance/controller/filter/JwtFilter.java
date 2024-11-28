@@ -2,6 +2,7 @@ package by.it_academy.jd2.finance.controller.filter;
 
 import by.it_academy.jd2.finance.service.dto.TokenDto;
 import by.it_academy.jd2.finance.service.util.JwtTokenHandler;
+import by.it_academy.jd2.finance.service.validation.IUserValidator;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,9 +23,11 @@ import static org.apache.logging.log4j.util.Strings.isEmpty;
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtTokenHandler jwtHandler;
+    private final IUserValidator userValidator;
 
-    public JwtFilter(JwtTokenHandler jwtHandler) {
+    public JwtFilter(JwtTokenHandler jwtHandler, IUserValidator userValidator) {
         this.jwtHandler = jwtHandler;
+        this.userValidator = userValidator;
     }
 
     @Override
@@ -48,6 +51,11 @@ public class JwtFilter extends OncePerRequestFilter {
 
         // Get user identity and set it on the spring security context
         TokenDto tokenDto = jwtHandler.getTokenDto(token);
+
+        if (!userValidator.validate(tokenDto.getUserId())) {
+            chain.doFilter(request, response);
+            return;
+        }
 
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                 tokenDto.getUserId(), null,
