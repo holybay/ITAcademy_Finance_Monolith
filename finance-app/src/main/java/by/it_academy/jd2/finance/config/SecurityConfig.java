@@ -40,6 +40,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(requests -> requests
                 // Our authenticated endpoints
                 .requestMatchers("/users", "users/**").hasAnyRole("ADMIN")
+                .requestMatchers("/audit", "audit/**").hasAnyRole("ADMIN")
                 .requestMatchers("/cabinet/login").permitAll()
                 .requestMatchers("/cabinet/verification").permitAll()
                 .requestMatchers("/cabinet/registration").permitAll()
