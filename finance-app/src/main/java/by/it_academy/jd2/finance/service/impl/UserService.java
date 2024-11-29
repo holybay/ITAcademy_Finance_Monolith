@@ -10,7 +10,9 @@ import by.it_academy.jd2.finance.repository.entity.user.EUserRole;
 import by.it_academy.jd2.finance.repository.entity.user.EUserStatus;
 import by.it_academy.jd2.finance.repository.entity.user.User;
 import by.it_academy.jd2.finance.service.IAuditService;
+import by.it_academy.jd2.finance.service.INotificationService;
 import by.it_academy.jd2.finance.service.IUserService;
+import by.it_academy.jd2.finance.service.IVerificationService;
 import by.it_academy.jd2.finance.service.dto.UpdateCoordinate;
 import by.it_academy.jd2.finance.service.dto.auditUnit.AuditUnitCreateDto;
 import by.it_academy.jd2.finance.service.dto.page.PageDto;
@@ -33,6 +35,7 @@ import java.util.UUID;
 @Service
 public class UserService implements IUserService {
 
+    public static final String Activation_LINK_SUBJECT = "Activation link";
     private final IUserRepository userRepository;
     private final IUserValidator userValidator;
     private final UserMapper userMapper;
@@ -40,9 +43,13 @@ public class UserService implements IUserService {
     private final PageProperty pageProperty;
     private final IAuditService auditService;
     private final JwtTokenHandler tokenHandler;
+    private final INotificationService notificationService;
+    private final IVerificationService verificationService;
 
     public UserService(IUserRepository userRepository, IUserValidator userValidator, UserMapper userMapper,
-                       PasswordEncoder encoder, PageProperty pageProperty, IAuditService auditService, JwtTokenHandler tokenHandler) {
+                       PasswordEncoder encoder, PageProperty pageProperty, IAuditService auditService,
+                       JwtTokenHandler tokenHandler, INotificationService notificationService,
+                       IVerificationService verificationService) {
         this.userRepository = userRepository;
         this.userValidator = userValidator;
         this.userMapper = userMapper;
@@ -50,6 +57,8 @@ public class UserService implements IUserService {
         this.pageProperty = pageProperty;
         this.auditService = auditService;
         this.tokenHandler = tokenHandler;
+        this.notificationService = notificationService;
+        this.verificationService = verificationService;
     }
 
     @Override
@@ -91,6 +100,9 @@ public class UserService implements IUserService {
                                               .setType(EEssenceType.USER)
                                               .setEssenceTypeId(createDto.getId())
                                               .build());
+
+        String body = verificationService.generateVerificationLink(this.getById(createDto.getId()));
+        notificationService.sendMessage(createDto.getMail(), Activation_LINK_SUBJECT, body);
     }
 
     @Override

@@ -34,3 +34,5 @@ application:
   jwt:
     secret: BgKSLkg!oFKAjs1m^mm!sfsGmZQs;k1L!
     issuer: ITAcademy
+  verification:
+    url: http://localhost:8080/cabinet/verification
