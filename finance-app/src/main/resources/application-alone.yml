@@ -1,38 +1,11 @@
 spring:
-  application:
-    name: finance-app
   datasource:
     url: jdbc:postgresql://localhost:5432/finance_monolith
     username: postgres
     password: postgres
     hikari:
       maximum-pool-size: 20
-  jpa:
-    hibernate:
-      ddl-auto: validate
-    show-sql: true
-    properties:
-      hibernate:
-        default_schema: app
-  mail:
-    host: smtp.mail.ru
-    port: 465
-    username: jlk.nekto@mail.ru
-    password: Uyv3QKHCsXNCRyPwgLUB
-    protocol: smtp
-    properties:
-      mail:
-        smtp:
-          auth: true
-          ssl:
-            enable: true
-#Custom properties
+
 application:
-  pagination:
-    minPageSize: 2
-    maxPageSize: 30
-  jwt:
-    secret: BgKSLkg!oFKAjs1m^mm!sfsGmZQs;k1L!
-    issuer: ITAcademy
   verification:
     url: http://localhost:8080/cabinet/verification
