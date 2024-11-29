@@ -102,3 +102,17 @@ CONSTRAINT audit_users_fk  FOREIGN KEY (user_id) REFERENCES app.users(id)
 
 ALTER TABLE IF EXISTS app.audit_units
     OWNER to postgres;
+
+CREATE TABLE app.verification_units
+(
+id uuid,
+user_id uuid NOT NULL,
+code integer,
+created_at TIMESTAMP(3) NOT NULL,
+updated_at TIMESTAMP(3) NOT NULL,
+CONSTRAINT verification_units_pk PRIMARY KEY (id),
+CONSTRAINT verification_units_users_fk  FOREIGN KEY (user_id) REFERENCES app.users(id)
+);
+
+ALTER TABLE IF EXISTS app.verification_units
+    OWNER to postgres;
