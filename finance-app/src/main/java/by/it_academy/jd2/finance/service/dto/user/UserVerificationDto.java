@@ -1,24 +1,25 @@
 package by.it_academy.jd2.finance.service.dto.user;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Objects;
 
 public class UserVerificationDto {
 
-    @JsonProperty
-    private String code;
+    @NotNull(message = "Verification code can't be null!")
+    private Integer code;
+
     @NotBlank(message = "Email can't be blank!")
     @Email(message = "Provide your email!")
     private String mail;
 
-    public String getCode() {
+    public Integer getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 
