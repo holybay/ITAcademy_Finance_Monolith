@@ -39,6 +39,9 @@ public class AuthService implements IAuthService {
         if (user.getStatus() == EUserStatus.DEACTIVATED || !encoder.matches(loginDto.getPassword(), user.getPassword())) {
             throw new AppAuthException("Incorrect mail or password!");
         }
+        if (user.getStatus() == EUserStatus.WAITING_ACTIVATION) {
+            throw new AppAuthException("User isn't verified!");
+        }
         auditService.create(AuditUnitCreateDto.builder()
                                               .setUserId(user.getId())
                                               .setText("User logged in!")
