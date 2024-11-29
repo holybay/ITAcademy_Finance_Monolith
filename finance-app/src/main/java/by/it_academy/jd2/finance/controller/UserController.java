@@ -35,8 +35,8 @@ public class UserController {
 
     @GetMapping("/verification")
     public ResponseEntity<HttpStatus> getById(@Valid UserVerificationDto verificationDto) {
-//        UserOutDto user = userService.getById();
-        return new ResponseEntity<>(HttpStatus.OK); //TODO verify on the IAuthService
+        authService.verify(verificationDto);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/login")

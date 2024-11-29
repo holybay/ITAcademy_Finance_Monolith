@@ -7,8 +7,10 @@ import by.it_academy.jd2.finance.repository.entity.user.User;
 import by.it_academy.jd2.finance.service.IAuditService;
 import by.it_academy.jd2.finance.service.IAuthService;
 import by.it_academy.jd2.finance.service.IUserService;
+import by.it_academy.jd2.finance.service.IVerificationService;
 import by.it_academy.jd2.finance.service.dto.auditUnit.AuditUnitCreateDto;
 import by.it_academy.jd2.finance.service.dto.user.UserLoginDto;
+import by.it_academy.jd2.finance.service.dto.user.UserVerificationDto;
 import by.it_academy.jd2.finance.service.util.JwtTokenHandler;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,12 +22,14 @@ public class AuthService implements IAuthService {
     private final PasswordEncoder encoder;
     private final JwtTokenHandler tokenHandler;
     private final IAuditService auditService;
+    private final IVerificationService verificationService;
 
-    public AuthService(IUserService userService, PasswordEncoder encoder, JwtTokenHandler tokenHandler, IAuditService auditService) {
+    public AuthService(IUserService userService, PasswordEncoder encoder, JwtTokenHandler tokenHandler, IAuditService auditService, IVerificationService verificationService) {
         this.userService = userService;
         this.encoder = encoder;
         this.tokenHandler = tokenHandler;
         this.auditService = auditService;
+        this.verificationService = verificationService;
     }
 
     @Override
@@ -42,5 +46,13 @@ public class AuthService implements IAuthService {
                                               .setEssenceTypeId(user.getId())
                                               .build());
         return tokenHandler.generateToken(user);
+    }
+
+    @Override
+    public void verify(UserVerificationDto dto) {
+        if (!verificationService.verify(dto.getMail(), dto.getCode())) {
+            throw new IllegalArgumentException("Failed to verify a user via link!");
+        }
+        userService.updateStatus(dto.getMail(), EUserStatus.ACTIVATED);
     }
 }
