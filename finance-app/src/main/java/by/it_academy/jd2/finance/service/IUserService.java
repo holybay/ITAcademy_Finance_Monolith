@@ -1,5 +1,6 @@
 package by.it_academy.jd2.finance.service;
 
+import by.it_academy.jd2.finance.repository.entity.user.EUserStatus;
 import by.it_academy.jd2.finance.repository.entity.user.User;
 import by.it_academy.jd2.finance.service.dto.UpdateCoordinate;
 import by.it_academy.jd2.finance.service.dto.page.PageDto;
@@ -26,4 +27,6 @@ public interface IUserService {
     Page<User> getAll(PageDto pageDto);
 
     void update(UserUpdateDto updateDto, UpdateCoordinate coordinate);
+
+    void updateStatus(String mail, EUserStatus newStatus);
 }

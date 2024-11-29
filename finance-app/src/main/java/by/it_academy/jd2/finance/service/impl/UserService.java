@@ -1,6 +1,7 @@
 package by.it_academy.jd2.finance.service.impl;
 
 import by.it_academy.jd2.finance.config.property.PageProperty;
+import by.it_academy.jd2.finance.platform.exception.ApplicationException;
 import by.it_academy.jd2.finance.platform.exception.ValidationException;
 import by.it_academy.jd2.finance.platform.util.PageUtil;
 import by.it_academy.jd2.finance.repository.IUserRepository;
@@ -120,6 +121,17 @@ public class UserService implements IUserService {
         updateDto.setPassword(encoder.encode(updateDto.getPassword()));
         User entity = userMapper.toEntity(updateDto, coordinate);
         userRepository.saveAndFlush(entity);
+    }
+
+    @Override
+    @Transactional
+    public void updateStatus(String mail, EUserStatus newStatus) {
+        User user = this.getByMail(mail);
+        if (user.getStatus() == newStatus) {
+            throw new ApplicationException("User status has already been updated");
+        }
+        user.setStatus(newStatus);
+        userRepository.saveAndFlush(user);
     }
 
     private void emailCheck(String mail) {
